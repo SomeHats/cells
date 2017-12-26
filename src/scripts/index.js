@@ -1,2 +1,5 @@
-console.log('hello, world!');
-document.write('ooooghhhhh');
+const x = (s: number): number => {
+  return s + s;
+}
+
+alert(x(4));
