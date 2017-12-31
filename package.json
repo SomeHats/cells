@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build --out-dir docs --public-url /grid src/index.html",
+    "build": "parcel build --out-dir docs --public-url /cells src/index.html",
     "test": "jest"
   },
   "author": "",
