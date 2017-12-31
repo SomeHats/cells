@@ -101,8 +101,10 @@ export default class Grid<T> {
     return this.cells[index];
   }
 
-  valueAtCoords(x: number, y: number): ?T {
-    const index = this.coordsToIndex(x, y);
+  valueAtCoords(x: number, y: number, wrap?: boolean = false): ?T {
+    const index = wrap
+      ? this.coordsToIndex(this.wrapX(x), this.wrapY(y))
+      : this.coordsToIndex(x, y);
     return this.valueAtIndex(index);
   }
 
@@ -121,5 +123,9 @@ export default class Grid<T> {
     return deltas.map(([dx, dy]) =>
       this.valueAtCoords(this.wrapX(x + dx), this.wrapY(y + dy))
     );
+  }
+
+  areCoordsAtEdge(x: number, y: number): boolean {
+    return x === 0 || x === this.width - 1 || y === 0 || y === this.height - 1;
   }
 }

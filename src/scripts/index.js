@@ -6,6 +6,7 @@ import Grid from "./Grid";
 import noise from "./steppers/noise";
 import conway from "./steppers/conway";
 import sin from "./steppers/sin";
+import tree from "./steppers/tree";
 
 function setup() {
   const canvas = document.querySelector("canvas");
@@ -14,16 +15,18 @@ function setup() {
   const ctx = canvas.getContext("2d");
   invariant(ctx instanceof CanvasRenderingContext2D, "context is borked");
 
-  run(ctx, sin);
+  run(ctx, tree);
 }
 
 type Stepper<T> = {
-  initial: (?T, number, number, Grid<T>) => ?T,
+  initial: (number, number, Grid<T>) => ?T,
   step: (?T, number, number, Grid<T>, t: number) => ?T
 };
 
 function run(ctx: CanvasRenderingContext2D, stepper: Stepper<number>) {
-  let grid: Grid<number> = new Grid(100, 100).map(stepper.initial);
+  let grid: Grid<number> = new Grid(100, 100).map((c, x, y, g) =>
+    stepper.initial(x, y, g)
+  );
   render(grid, ctx);
 
   window.requestAnimationFrame(step);
